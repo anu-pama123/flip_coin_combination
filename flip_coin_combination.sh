@@ -3,41 +3,68 @@ read -p "Enter your choice " choice
 
 case $choice in
 
-1)  for((i=1;i<=num;i++))
+2)  for((i=1;i<=num;i++))
 do
-randomnumber=$(($RANDOM%2))
-if [ $randomnumber -eq 1 ]
+coin1=$(($RANDOM%2))
+coin2=$(($RANDOM%2))
+if [ $coin1 -eq 1 ] && [ $coin2 -eq 1 ]
 then 
-dictionary[$i]="HEAD"
-else
-dictionary[$i]="TAIL"
+dictionary[$i]="HH"
+elif [ $coin1 -eq 0 ] && [ $coin2 -eq 0 ]
+then
+dictionary[$i]="TT"
+elif [ $coin1 -eq 1 ] && [ $coin2 -eq 0 ]
+then
+dictionary[$i]="HT"
+elif [ $coin1 -eq 0 ] && [ $coin2 -eq 1 ]
+then
+dictionary[$i]="TH"
 fi
-done 
+done
 echo ${dictionary[@]}
+
 count=1
-no_of_head=0
-no_of_tail=0
+no_of_HH=0
+no_of_TT=0
+no_of_HT=0
+no_of_TH=0
 while [ $count -le $num ]
 do
-if [ ${dictionary[$count]} == "HEAD" ]
+if [ ${dictionary[$count]} == "HH" ]
 then
-((no_of_head++))
-fi
-if [ ${dictionary[$count]} == "TAIL" ]
+((no_of_HH++))
+elif [ ${dictionary[$count]} == "TT" ]
 then
-((no_of_tail++))
+((no_of_TT++))
+elif [ ${dictionary[$count]} == "HT" ]
+then
+((no_of_HT++))
+elif [ ${dictionary[$count]} == "TH" ]
+then
+((no_of_TH++))
+
 fi
 ((count++))
 done
-echo "Number of head is :  "$no_of_head
-echo "Number of tail is :  "$no_of_tail
-if [ $no_of_head -gt $no_of_tail ]
+echo "Number of HH is :  "$no_of_HH
+echo "Number of TT is :  "$no_of_TT
+echo "Number of HT is :  "$no_of_HT
+echo "Number of TH is :  "$no_of_TH
+number[0]="$no_of_HH"
+number[1]="$no_of_TT"
+number[2]="$no_of_HT"
+number[3]="$no_of_TH"
+echo ${number[@]}
+max=${number[0]}
+for((i=1;i<4;i++))
+do
+if [ ${number[i]} -gt $max ]
 then
-perc1=$(($no_of_head*100/$num))
-echo "Head is the winner and winning percentage is = "$perc1"%"
-else
-perc2=$(($no_of_tail*100/$num))
-echo "Tail is the winner and winning percentage is = "$perc2"%"
+max=${number[i]}
 fi
+done
+echo $max
+percentage=$(($max*100/$num))
+echo "$max  is the winner and winning percentage is = "$percentage"%"
 esac
 
