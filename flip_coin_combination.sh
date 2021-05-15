@@ -1,4 +1,5 @@
 read -p "Enter the number of times you want to flip the coin " num 
+echo "1)Singlet combination 2)Doublet combination 3)Triplet combination"
 read -p "Enter your choice " choice
 
 case $choice in
@@ -36,6 +37,9 @@ else
 percentage2=$(( $count_of_tail*100/$num ))
 echo "TAIL is the winner and winning percentage is = "$percentage2 "%"
 fi
+;;
+esac
+case $choice in
 2)  for((i=1;i<=num;i++))
 do
 coin1=$(($RANDOM%2))
@@ -52,7 +56,56 @@ dictionary[$i]="HT"
 elif [ $coin1 -eq 0 ] && [ $coin2 -eq 1 ]
 then
 dictionary[$i]="TH"
-3)  for((i=1;i<=num;i++))
+fi
+done
+echo ${dictionary[@]}
+count=0
+no_of_HH=0
+no_of_TT=0
+no_of_HT=0
+no_of_TH=0
+while [ $count -le $num ]
+do
+if [ "${dictionary[$count]}" == "HH" ]
+then
+((no_of_HH++))
+elif [ "${dictionary[$count]}" == "TT" ]
+then
+((no_of_TT++))
+elif [ "${dictionary[$count]}" == "HT" ]
+then
+((no_of_HT++))
+elif [ "${dictionary[$count]}" == "TH" ]
+then
+((no_of_TH++))
+
+fi
+((count++))
+done
+echo "Number of HH is :  "$no_of_HH
+echo "Number of TT is :  "$no_of_TT
+echo "Number of HT is :  "$no_of_HT
+echo "Number of TH is :  "$no_of_TH
+number[0]="$no_of_HH"
+number[1]="$no_of_TT"
+number[2]="$no_of_HT"
+number[3]="$no_of_TH"
+#echo ${number[@]}
+max=${number[0]}
+for((i=1;i<4;i++))
+do
+if [ ${number[i]} -gt $max ]
+then
+max=${number[i]}
+fi
+done
+percentage=$(($max*100/$num))
+echo "$max  is the winner and winning percentage is = "$percentage"%"
+;;
+esac
+case $choice in
+3)
+for((i=1;i<=num;i++))
 do
 coin1=$(($RANDOM%2))
 coin2=$(($RANDOM%2))
@@ -84,41 +137,7 @@ dictionary[$i]="HHH"
 fi
 done
 echo ${dictionary[@]}
-
-count=1
-no_of_HH=0
-no_of_TT=0
-no_of_HT=0
-no_of_TH=0
-while [ $count -le $num ]
-do
-if [ ${dictionary[$count]} == "HH" ]
-then
-((no_of_HH++))
-elif [ ${dictionary[$count]} == "TT" ]
-then
-((no_of_TT++))
-elif [ ${dictionary[$count]} == "HT" ]
-then
-((no_of_HT++))
-elif [ ${dictionary[$count]} == "TH" ]
-then
-((no_of_TH++))
-
-fi
-((count++))
-done
-echo "Number of HH is :  "$no_of_HH
-echo "Number of TT is :  "$no_of_TT
-echo "Number of HT is :  "$no_of_HT
-echo "Number of TH is :  "$no_of_TH
-number[0]="$no_of_HH"
-number[1]="$no_of_TT"
-number[2]="$no_of_HT"
-number[3]="$no_of_TH"
-#echo ${number[@]}
-max=${number[0]}
-for((i=1;i<4;i++))
+count=0
 no_of_TTT=0
 no_of_TTH=0
 no_of_THT=0
@@ -129,28 +148,28 @@ no_of_HHT=0
 no_of_HHH=0
 while [ $count -le $num ]
 do
-if [ ${dictionary[count]} == "TTT" ]
+if [ "${dictionary[count]}" == "TTT" ]
 then
 ((no_of_TTT++))
-elif [ ${dictionary[count]} == "TTH" ]
+elif [ "${dictionary[count]}" == "TTH" ]
 then
 ((no_of_TTH++))
-elif [ ${dictionary[count]} == "THT" ]
+elif [ "${dictionary[count]}" == "THT" ]
 then
 ((no_of_THT++))
-elif [ ${dictionary[count]} == "THH" ]
+elif [ "${dictionary[count]}" == "THH" ]
 then
 ((no_of_THH++))
-elif [ ${dictionary[count]} == "HTT" ]
+elif [ "${dictionary[count]}" == "HTT" ]
 then
 ((no_of_HTT++))
-elif [ ${dictionary[count]} == "HTH" ]
+elif [ "${dictionary[count]}" == "HTH" ]
 then
 ((no_of_HTH++))
-elif [ ${dictionary[count]} == "HHT" ]
+elif [ "${dictionary[count]}" == "HHT" ]
 then
 ((no_of_HHT++))
-elif [ ${dictionary[count]} == "HHH" ]
+elif [ "${dictionary[count]}" == "HHH" ]
 then
 ((no_of_HHH++))
 fi
