@@ -13,4 +13,5 @@ else
 dictionary[$i]="TAIL"
 fi
 done
+echo ${dictionary[@]}
 esac
